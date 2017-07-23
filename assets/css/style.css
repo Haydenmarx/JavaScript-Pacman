@@ -1,0 +1,68 @@
+body {
+  background: #181819;
+}
+
+.centered {
+  text-align: center;
+}
+
+.shiftRight {
+  text-align: right;
+}
+
+#scoreboard {
+  width: 700px;
+  margin: auto;
+}
+
+#scoreboard > p {
+  margin: 5px auto;
+  font-size: 16px;
+  color: #999;
+}
+
+.wall {
+  background: url('/assets/images/wall.png');
+  background-size: cover;
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+}
+
+.coin {
+  background: url('/assets/images/coin.gif');
+  background-color: #181819;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+}
+
+.blank {
+  height: 25px;
+  width: 25px;
+  display: inline-block;  
+  background: #181819;
+}
+
+.pacman {
+  background: url('/assets/images/pacman.gif');
+  background-color: #181819;
+  background-size: cover;
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+}
+
+.ghost {
+  background: url('/assets/images/ghost1.png');
+  background-size:cover;
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+}
+
+.container {
+  height: 25px;
+}
