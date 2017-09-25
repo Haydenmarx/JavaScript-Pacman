@@ -1,5 +1,6 @@
+let q = 1
 let gameMap = [
-  [
+  [              //                         //
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
@@ -14,7 +15,7 @@ let gameMap = [
     [3,3,3,3,3,1,0,1,1,3,3,3,3,3,3,3,3,3,3,1,1,0,1,3,3,3,3,3],
     [1,1,1,1,1,1,0,1,1,3,3,1,1,3,3,1,1,3,3,1,1,0,1,1,1,1,1,1],
     [3,3,3,3,3,3,0,3,3,3,3,1,3,4,3,3,1,3,3,3,3,0,3,3,3,3,3,3],
-    [1,1,1,1,1,1,0,1,1,3,3,1,1,1,1,1,1,3,3,1,1,0,1,1,1,1,1,1],
+    [1,1,1,1,1,1,0,1,1,3,3,1,1,1,1,1,1,3,3,1,1,0,1,1,1,1,1,1],//
     [3,3,3,3,3,1,0,1,1,3,3,3,3,3,3,3,3,3,3,1,1,0,1,3,3,3,3,3],
     [3,3,3,3,3,1,0,1,1,3,3,3,3,3,3,3,3,3,3,1,1,0,1,3,3,3,3,3],
     [3,3,3,3,3,1,0,1,1,3,1,1,1,1,1,1,1,1,3,1,1,0,1,3,3,3,3,3],
@@ -42,9 +43,85 @@ let position = {
 };
 
 let purpleGhost= {
-  x:4,
-  y:22
+  x:13,
+  y:13
 }
+
+let gameStarted = false;
+let temp = 3;
+let lastSquare = 3;
+let move = 0;
+let moveOptions = ["up", "down", "left", "right"]
+let currentMove = 0;//Math.floor(Math.random(4 - 0) * 4);
+
+let optionOneX;
+let optionOneY;
+let optionTwoX;
+let optionTwoY;
+let optionThreeX;
+let optionThreeY;
+let optionFourX;
+let optionFourY;
+
+let ghostMove = function() {
+  //Use moves + custom blocks to spell pacman across the middle P****n Pa**an Pacman || P***** Pa**** Pac*** Pacm** Pacma*
+  if (move <= 1) {
+    temp = gameMapCopy[purpleGhost.y-1][purpleGhost.x]
+    gameMapCopy[purpleGhost.y-1][purpleGhost.x] = 4;
+    gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+    purpleGhost.y = purpleGhost.y-1;
+    move++;
+  } else if (move === 2) {
+    temp = gameMapCopy[purpleGhost.y][purpleGhost.x-1]
+    gameMapCopy[purpleGhost.y][purpleGhost.x-1] = 4;
+    gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+    purpleGhost.x = purpleGhost.x-1;
+    gameMapCopy[12][13] = 1;
+    gameMapCopy[12][14] = 1;
+    move++;
+  } else {
+      if (moveOptions[currentMove] === "right" && gameMapCopy[purpleGhost.y][purpleGhost.x+1] === undefined){
+        console.log('hit negative')
+        gameMapCopy[purpleGhost.y][purpleGhost.x-27] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
+        purpleGhost.x = purpleGhost.x - 27;
+      } else if (moveOptions[currentMove] === "left" && gameMapCopy[purpleGhost.y][purpleGhost.x-1] === undefined){
+        console.log('hit positive')
+        gameMapCopy[purpleGhost.y][purpleGhost.x+27] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
+        purpleGhost.x = purpleGhost.x + 27;
+      } else if (moveOptions[currentMove] === "up"  && gameMapCopy[purpleGhost.y-1][purpleGhost.x] !== 1) {
+        temp = gameMapCopy[purpleGhost.y-1][purpleGhost.x]
+        gameMapCopy[purpleGhost.y-1][purpleGhost.x] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;  //up
+        purpleGhost.y = purpleGhost.y-1;
+      } else if (moveOptions[currentMove] === "left"  && gameMapCopy[purpleGhost.y][purpleGhost.x-1] !== 1) {
+        temp = gameMapCopy[purpleGhost.y][purpleGhost.x-1]
+        gameMapCopy[purpleGhost.y][purpleGhost.x-1] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare; //left
+        purpleGhost.x = purpleGhost.x-1;
+      } else if (moveOptions[currentMove] === "down"  && gameMapCopy[purpleGhost.y+1][purpleGhost.x] !== 1) {
+        temp = gameMapCopy[purpleGhost.y+1][purpleGhost.x]
+        gameMapCopy[purpleGhost.y+1][purpleGhost.x] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare; //down
+        purpleGhost.y = purpleGhost.y+1;
+      } else if (moveOptions[currentMove] === "right"  && gameMapCopy[purpleGhost.y][purpleGhost.x+1] !== 1) {
+        temp = gameMapCopy[purpleGhost.y][purpleGhost.x+1]
+        gameMapCopy[purpleGhost.y][purpleGhost.x+1] = 4;  //right
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+        purpleGhost.x = purpleGhost.x+1;
+      } else {
+        currentMove = Math.floor(Math.random(4 - 0) * 4);
+      }  
+  lastSquare = temp;
+  if (lastSquare === 2) {
+    lose();
+    return false;
+  }
+  createGrid();
+};
+
+let test;
 
 let gameMapCopy = clone(gameMap[0]);  //update to clone(gameMap[level]) when more levels
 
@@ -83,7 +160,11 @@ function createGrid (map){
 }
 createGrid(gameMapCopy);
 
-document.onkeydown = function movePacman (keypress){
+document.onkeydown = function movePacman (keypress) {
+  if (gameStarted === false) {
+    gameStarted = true;
+    test = setInterval(ghostMove, 200);
+  }
   if(keypress.keyCode === 38 && gameMapCopy[position.y-1][position.x] != 1) {
     if (gameMapCopy[position.y-1][position.x] === 0){
       updateScore();
@@ -145,26 +226,41 @@ function updateScore (){
   document.getElementById('score').innerHTML = score;
 }
 
+//create reset function for duplicate code between win and lose.
+
 function win () {
+  gameStarted = false;
   level++
   alert("You beat level " + level)
+  clearInterval(test);
   position.x = 13;
   position.y = 22;
+  lastSquare = 3;
+  purpleGhost.x = 13;
+  purpleGhost.y = 13;
+  lastSquare = 3;
+  move = 0;
   gameMapCopy = clone(gameMap[0]);  //update to clone(gameMap[level]) when more levels
   createGrid(gameMapCopy);
 }
 
 
 function lose (){
+  gameStarted = false;
   alert("Game Over" + "\n" + "Your final score is " + score);
   position.x = 13;
   position.y = 22;
+  purpleGhost.x = 13;
+  purpleGhost.y = 13;
+  lastSquare = 3;
+  move = 0;
   score = -100;
   level = 0;
   updateScore();
   document.getElementById('world').innerHTML = "";
   gameMapCopy = clone(gameMap[0]);  //update to clone(gameMap[level]) when more levels
   createGrid(gameMapCopy);
+  clearInterval(test);
 }
 
 function rotatePacman (position){
