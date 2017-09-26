@@ -65,32 +65,117 @@ let optionFourY;
 
 let ghostMove = function() {
   //Use moves + custom blocks to spell pacman across the middle P****n Pa**an Pacman || P***** Pa**** Pac*** Pacm** Pacma*
-
+  let tempWant = "";
+  let tempWant2 = "";
   let xWant = position.x - purpleGhost.x
   let yWant = position.y - purpleGhost.y
   if (Math.abs(xWant) >= Math.abs(yWant)) {
     if (xWant < 0) {
-      //                set left           for 1
-      // if (yWant < 0) set up   else down for 2 
-      //                set right          for 3
-      //                set down else up   for 4   
+      // set left for 1
+      optionOneX = purpleGhost.x-1
+      optionOneY = purpleGhost.y
+      tempWant = "left"
+      // if (yWant < 0) set up else down for 2 
+      if (yWant < 0) {
+        optionTwoX = purpleGhost.x
+        optionTwoY = purpleGhost.y-1
+        tempWant2 = "up"        
+      } else {
+        optionTwoX = purpleGhost.x
+        optionTwoY = purpleGhost.y+1
+        tempWant2 = "down"    
+      }
+      //set right for 3
+      optionThreeX = purpleGhost.x+1
+      optionThreeY = purpleGhost.y
+      //set down else up for 4  
+      if (optionTwoY === purpleGhost.y-1) {
+        optionFourX = purpleGhost.x
+        optionFourY = purpleGhost.y+1  
+      } else {
+        optionFourX = purpleGhost.x
+        optionFourY = purpleGhost.y-1
+      }
     } else {
-      //                set right          for 1
-      // if (yWant < 0) set up   else down for 2 
-      //                set left           for 3
-      //                set down else up   for 4  
+      // set right for 1
+      optionOneX = purpleGhost.x+1
+      optionOneY = purpleGhost.y
+      tempWant = "right"
+      // if (yWant < 0) set up else down for 2 
+      if (yWant < 0) {
+        optionTwoX = purpleGhost.x
+        optionTwoY = purpleGhost.y-1
+        tempWant2 = "up"         
+      } else {
+        optionTwoX = purpleGhost.x
+        optionTwoY = purpleGhost.y+1
+        tempWant2 = "down"    
+      }
+      //set left for 3
+      optionThreeX = purpleGhost.x-1
+      optionThreeY = purpleGhost.y
+      //set down else up for 4  
+      if (optionTwoY === purpleGhost.y-1) {
+        optionFourX = purpleGhost.x
+        optionFourY = purpleGhost.y+1  
+      } else {
+        optionFourX = purpleGhost.x
+        optionFourY = purpleGhost.y-1
+      }
     }
   } else {
     if (yWant < 0) {
-      //                set up              for 1
-      // if (xWant < 0) set left else right for 2 
-      //                set down            for 3
-      //                set right else left for 4 
+      // set up for 1
+      optionOneX = purpleGhost.x
+      optionOneY = purpleGhost.y-1
+      tempWant = "up"
+      // if (xWant < 0) set left else right for 2
+      if (xWant < 0) {
+        optionTwoX = purpleGhost.x-1
+        optionTwoY = purpleGhost.y
+        tempWant2 = "left"         
+      } else {
+        optionTwoX = purpleGhost.x+1
+        optionTwoY = purpleGhost.y 
+        tempWant2 = "right"   
+      }
+      // set down for 3
+      optionThreeX = purpleGhost.x
+      optionThreeY = purpleGhost.y+1
+      // set right else left for 4 
+      if (optionTwoX === purpleGhost.x-1) {
+        optionFourX = purpleGhost.x+1
+        optionFourY = purpleGhost.y  
+      } else {
+        optionFourX = purpleGhost.x-1
+        optionFourY = purpleGhost.y
+      }
     } else {
-      //                set down            for 1
+      // set down for 1
+      optionOneX = purpleGhost.x
+      optionOneY = purpleGhost.y+1
+      tempWant = "down"
       // if (xWant < 0) set left else right for 2 
-      //                set up              for 3
-      //                set right else left for 4 
+      if (xWant < 0) {
+        optionTwoX = purpleGhost.x+1
+        optionTwoY = purpleGhost.y   
+        tempWant2 = "left"       
+      } else {
+        optionTwoX = purpleGhost.x-1
+        optionTwoY = purpleGhost.y  
+        tempWant2 = "right"   
+      }
+      // set up for 3
+      optionThreeX = purpleGhost.x
+      optionThreeY = purpleGhost.y-1      
+      // set right else left for 4 
+      if (optionTwoX === purpleGhost.x-1) {
+        optionFourX = purpleGhost.x+1
+        optionFourY = purpleGhost.y  
+      } else {
+        optionFourX = purpleGhost.x-1
+        optionFourY = purpleGhost.y
+      }
     }
   }
   
@@ -109,39 +194,72 @@ let ghostMove = function() {
     gameMapCopy[12][14] = 1;
     move++;
   } else {
-      if (moveOptions[currentMove] === "right" && gameMapCopy[purpleGhost.y][purpleGhost.x+1] === undefined) {
-        console.log('hit negative')
-        gameMapCopy[purpleGhost.y][purpleGhost.x-27] = 4;
-        gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
-        purpleGhost.x = purpleGhost.x - 27;
-      } else if (moveOptions[currentMove] === "left" && gameMapCopy[purpleGhost.y][purpleGhost.x-1] === undefined) {
-        console.log('hit positive')
-        gameMapCopy[purpleGhost.y][purpleGhost.x+27] = 4;
-        gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
-        purpleGhost.x = purpleGhost.x + 27;
-      } else if (moveOptions[currentMove] === "up"  && gameMapCopy[purpleGhost.y-1][purpleGhost.x] !== 1) {
-        temp = gameMapCopy[purpleGhost.y-1][purpleGhost.x]
-        gameMapCopy[purpleGhost.y-1][purpleGhost.x] = 4;
-        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;  //up
-        purpleGhost.y = purpleGhost.y-1;
-      } else if (moveOptions[currentMove] === "left"  && gameMapCopy[purpleGhost.y][purpleGhost.x-1] !== 1) {
-        temp = gameMapCopy[purpleGhost.y][purpleGhost.x-1]
-        gameMapCopy[purpleGhost.y][purpleGhost.x-1] = 4;
-        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare; //left
-        purpleGhost.x = purpleGhost.x-1;
-      } else if (moveOptions[currentMove] === "down"  && gameMapCopy[purpleGhost.y+1][purpleGhost.x] !== 1) {
-        temp = gameMapCopy[purpleGhost.y+1][purpleGhost.x]
-        gameMapCopy[purpleGhost.y+1][purpleGhost.x] = 4;
-        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare; //down
-        purpleGhost.y = purpleGhost.y+1;
-      } else if (moveOptions[currentMove] === "right"  && gameMapCopy[purpleGhost.y][purpleGhost.x+1] !== 1) {
-        temp = gameMapCopy[purpleGhost.y][purpleGhost.x+1]
-        gameMapCopy[purpleGhost.y][purpleGhost.x+1] = 4;  //right
+
+      // if (moveOptions[currentMove] === "right" && gameMapCopy[purpleGhost.y][purpleGhost.x+1] === undefined) {
+      //   console.log('hit negative')
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x-27] = 4;
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
+      //   purpleGhost.x = purpleGhost.x - 27;
+      // } else if (moveOptions[currentMove] === "left" && gameMapCopy[purpleGhost.y][purpleGhost.x-1] === undefined) {
+      //   console.log('hit positive')
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x+27] = 4;
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
+      //   purpleGhost.x = purpleGhost.x + 27;
+      // } else if (moveOptions[currentMove] === "up"  && gameMapCopy[purpleGhost.y-1][purpleGhost.x] !== 1) {
+      //   temp = gameMapCopy[purpleGhost.y-1][purpleGhost.x]
+      //   gameMapCopy[purpleGhost.y-1][purpleGhost.x] = 4;
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;  //up
+      //   purpleGhost.y = purpleGhost.y-1;
+      // } else if (moveOptions[currentMove] === "left"  && gameMapCopy[purpleGhost.y][purpleGhost.x-1] !== 1) {
+      //   temp = gameMapCopy[purpleGhost.y][purpleGhost.x-1]
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x-1] = 4;
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare; //left
+      //   purpleGhost.x = purpleGhost.x-1;
+      // } else if (moveOptions[currentMove] === "down"  && gameMapCopy[purpleGhost.y+1][purpleGhost.x] !== 1) {
+      //   temp = gameMapCopy[purpleGhost.y+1][purpleGhost.x]
+      //   gameMapCopy[purpleGhost.y+1][purpleGhost.x] = 4;
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare; //down
+      //   purpleGhost.y = purpleGhost.y+1;
+      // } else if (moveOptions[currentMove] === "right"  && gameMapCopy[purpleGhost.y][purpleGhost.x+1] !== 1) {
+      //   temp = gameMapCopy[purpleGhost.y][purpleGhost.x+1]
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x+1] = 4;  //right
+      //   gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+      //   purpleGhost.x = purpleGhost.x+1;
+      // } else {
+      //   currentMove = Math.floor(Math.random(4 - 0) * 4);
+      // }  
+      
+      gameMapCopy[purpleGhost.y-1][purpleGhost.x] !== 1
+      //(gameMapCopy[purpleGhost.y][purpleGhost.x+1] === undefined)
+      
+      if (gameMapCopy[optionOneY][optionOneX] !== 1) {
+        temp = gameMapCopy[optionOneY][optionOneX]
+        gameMapCopy[optionOneY][optionOneX] = 4;
         gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
-        purpleGhost.x = purpleGhost.x+1;
+        purpleGhost.y = optionOneY
+        purpleGhost.x = optionOneX
+      } else if (gameMapCopy[optionTwoY][optionTwoX] !== 1) {
+        temp = gameMapCopy[optionTwoY][optionTwoX]
+        gameMapCopy[optionTwoY][optionTwoX] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+        purpleGhost.y = optionTwoY
+        purpleGhost.x = optionTwoX
+      } else if (gameMapCopy[optionThreeY][optionThreeX] !== 1) {
+        temp = gameMapCopy[optionThreeY][optionThreeX]
+        gameMapCopy[optionThreeY][optionThreeX] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+        purpleGhost.y = optionThreeY
+        purpleGhost.x = optionThreeX
       } else {
-        currentMove = Math.floor(Math.random(4 - 0) * 4);
-      }  
+        temp = gameMapCopy[optionFourY][optionFourX]
+        gameMapCopy[optionFourY][optionFourX] = 4;
+        gameMapCopy[purpleGhost.y][purpleGhost.x] = lastSquare;
+        purpleGhost.y = optionFourY
+        purpleGhost.x = optionFourX
+      }
+
+
+
     }
   lastSquare = temp;
   if (lastSquare === 2) {
@@ -149,6 +267,7 @@ let ghostMove = function() {
     return false;
   }
   createGrid();
+  console.log('You are closer if I move ' + tempWant + ' my second choice is ' + tempWant2 + '.')
 };
 
 let test;
