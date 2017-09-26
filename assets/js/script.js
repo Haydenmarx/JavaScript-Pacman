@@ -1,6 +1,6 @@
 let q = 1
 let gameMap = [
-  [              //                         //
+  [           
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
@@ -15,7 +15,7 @@ let gameMap = [
     [3,3,3,3,3,1,0,1,1,3,3,3,3,3,3,3,3,3,3,1,1,0,1,3,3,3,3,3],
     [1,1,1,1,1,1,0,1,1,3,3,1,1,3,3,1,1,3,3,1,1,0,1,1,1,1,1,1],
     [3,3,3,3,3,3,0,3,3,3,3,1,3,4,3,3,1,3,3,3,3,0,3,3,3,3,3,3],
-    [1,1,1,1,1,1,0,1,1,3,3,1,1,1,1,1,1,3,3,1,1,0,1,1,1,1,1,1],//
+    [1,1,1,1,1,1,0,1,1,3,3,1,1,1,1,1,1,3,3,1,1,0,1,1,1,1,1,1],
     [3,3,3,3,3,1,0,1,1,3,3,3,3,3,3,3,3,3,3,1,1,0,1,3,3,3,3,3],
     [3,3,3,3,3,1,0,1,1,3,3,3,3,3,3,3,3,3,3,1,1,0,1,3,3,3,3,3],
     [3,3,3,3,3,1,0,1,1,3,1,1,1,1,1,1,1,1,3,1,1,0,1,3,3,3,3,3],
@@ -65,6 +65,35 @@ let optionFourY;
 
 let ghostMove = function() {
   //Use moves + custom blocks to spell pacman across the middle P****n Pa**an Pacman || P***** Pa**** Pac*** Pacm** Pacma*
+
+  let xWant = position.x - purpleGhost.x
+  let yWant = position.y - purpleGhost.y
+  if (Math.abs(xWant) >= Math.abs(yWant)) {
+    if (xWant < 0) {
+      //                set left           for 1
+      // if (yWant < 0) set up   else down for 2 
+      //                set right          for 3
+      //                set down else up   for 4   
+    } else {
+      //                set right          for 1
+      // if (yWant < 0) set up   else down for 2 
+      //                set left           for 3
+      //                set down else up   for 4  
+    }
+  } else {
+    if (yWant < 0) {
+      //                set up              for 1
+      // if (xWant < 0) set left else right for 2 
+      //                set down            for 3
+      //                set right else left for 4 
+    } else {
+      //                set down            for 1
+      // if (xWant < 0) set left else right for 2 
+      //                set up              for 3
+      //                set right else left for 4 
+    }
+  }
+  
   if (move <= 1) {
     temp = gameMapCopy[purpleGhost.y-1][purpleGhost.x]
     gameMapCopy[purpleGhost.y-1][purpleGhost.x] = 4;
@@ -80,12 +109,12 @@ let ghostMove = function() {
     gameMapCopy[12][14] = 1;
     move++;
   } else {
-      if (moveOptions[currentMove] === "right" && gameMapCopy[purpleGhost.y][purpleGhost.x+1] === undefined){
+      if (moveOptions[currentMove] === "right" && gameMapCopy[purpleGhost.y][purpleGhost.x+1] === undefined) {
         console.log('hit negative')
         gameMapCopy[purpleGhost.y][purpleGhost.x-27] = 4;
         gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
         purpleGhost.x = purpleGhost.x - 27;
-      } else if (moveOptions[currentMove] === "left" && gameMapCopy[purpleGhost.y][purpleGhost.x-1] === undefined){
+      } else if (moveOptions[currentMove] === "left" && gameMapCopy[purpleGhost.y][purpleGhost.x-1] === undefined) {
         console.log('hit positive')
         gameMapCopy[purpleGhost.y][purpleGhost.x+27] = 4;
         gameMapCopy[purpleGhost.y][purpleGhost.x] = 3;
@@ -113,6 +142,7 @@ let ghostMove = function() {
       } else {
         currentMove = Math.floor(Math.random(4 - 0) * 4);
       }  
+    }
   lastSquare = temp;
   if (lastSquare === 2) {
     lose();
